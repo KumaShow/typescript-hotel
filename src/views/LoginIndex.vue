@@ -1,6 +1,7 @@
 <template>
   <div class="bg-background">
-    <main class="h-[calc(100vh-88px)] lg:flex md:h-[calc(100vh-120px)]">
+    <!-- <main class="h-[calc(100vh-88px)] lg:flex md:h-[calc(100vh-120px)]"> -->
+    <main class="h-screen lg:flex">
       <!-- <div
         class="h-[54px] bg-cover bg-no-repeat bg-[url('@/assets/img/mobile/line.png')]"
       ></div> -->
@@ -11,9 +12,9 @@
       <div class="container lg:w-1/2 lg:flex lg:items-center lg:justify-center">
         <div class="w-full lg:w-1/2">
           <div class="mb-10">
-            <span class="text-primary-100 text-sm font-bold"
-              >享樂酒店，誠摯歡迎</span
-            >
+            <span class="text-primary-100 text-sm font-bold">
+              享樂酒店，誠摯歡迎
+            </span>
             <h1 class="text-3xl text-white">立即開始旅程</h1>
           </div>
 
@@ -26,6 +27,7 @@
                 name="email"
                 placeholder="請輸入電子信箱"
                 class="w-full p-4 text-sm border border-gray-300 rounded-md"
+                v-model="formField.email"
               />
             </div>
             <div class="mb-4">
@@ -36,6 +38,7 @@
                 name="password"
                 placeholder="請輸入密碼"
                 class="w-full p-4 text-sm border border-gray-300 rounded-lg"
+                v-model="formField.password"
               />
             </div>
             <div class="flex">
@@ -59,8 +62,9 @@
             </div>
             <div class="mt-10">
               <button
-                type="submit"
+                type="button"
                 class="w-full bg-neutral-40 text-neutral-60 font-bold py-4 rounded-lg hover:bg-primary-120 hover:text-white transition duration-300"
+                @click.prevent="login"
               >
                 會員登入
               </button>
@@ -70,10 +74,11 @@
           <div class="mt-4">
             <span class="text-white text-sm">沒有會員嗎？</span>
             <router-link
-              to="/register"
+              to="/signup"
               class="text-primary-100 text-sm underline ms-2"
-              >前往註冊</router-link
             >
+              前往註冊
+            </router-link>
           </div>
         </div>
       </div>
@@ -81,6 +86,26 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { reactive } from 'vue';
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
+const formField = reactive<LoginForm>({
+  email: '',
+  password: '',
+});
+
+const login = async () => {
+  try {
+    const response = await axios.post('user/login', formField);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+};
+</script>
 
 <style scoped></style>
