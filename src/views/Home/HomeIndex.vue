@@ -75,7 +75,7 @@
         <!-- TODO: 背景模糊 -->
         <div class="container md:flex">
           <div
-            class="absolute top-[12%] left-[10%] right-[5%] md:top-[5%] md:w-9/12 md:relative p-6 lg:p-20 border-white border-[1px] rounded-[40px] rounded-br-none bg-gradient-to-b from-[#140F0ACC] to-[#BE9C7CCC]"
+            class="absolute top-[12%] left-[10%] right-[5%] md:top-[5%] md:w-9/12 md:relative p-6 lg:p-20 border-white border-[1px] rounded-[40px] rounded-br-none bg-gradient-to-b from-[#140F0ACC] to-[rgba(190,156,124,0.8)]"
           >
             <div class="flex items-center mb-10">
               <h2 class="text-5xl me-10">關於<br />我們</h2>
@@ -106,7 +106,36 @@
   </section>
 
   <!-- 查看房間 -->
-  <section class="bg-background py-20 md:py-[120px]"></section>
+  <section class="bg-background py-20 md:py-[120px] relative">
+    <div class="container">
+      <swiper-container>
+        <template v-for="slide in roomList" :key="slide.image">
+          <swiper-slide>
+            <div class="md:flex md:flex-row-reverse">
+              <div class="md:absolute left-0">
+                <img :src="slide.image" :alt="slide.title" />
+              </div>
+              <div class="md:1/2">
+                <div class="text-white mt-5 md:mt-6">
+                  <h3 class="text-4xl">{{ slide.title }}</h3>
+                  <p class="mt-4">{{ slide.description }}</p>
+                  <p class="text-3xl mt-7 md:mt-10">{{ slide.price }}</p>
+                </div>
+                <div class="mt-7 md:mt-10">
+                  <button
+                    type="button"
+                    class="text-black font-bold bg-white rounded-lg p-5 md:p-10 w-full hover:bg-primary-100 hover:text-white"
+                  >
+                    查看更多
+                  </button>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+        </template>
+      </swiper-container>
+    </div>
+  </section>
 
   <!-- 佳餚美饌 -->
   <section></section>
@@ -123,7 +152,11 @@ import { ref } from 'vue';
 import newsImg1 from '@/assets/img/mobile/news1.png';
 import newsImg2 from '@/assets/img/mobile/news2.png';
 import newsImg3 from '@/assets/img/mobile/news3.png';
+import roomImg1 from '@/assets/img/mobile/room1.png';
+import roomImg2 from '@/assets/img/mobile/room2-1.png';
+import roomImg3 from '@/assets/img/mobile/room3-1.png';
 
+/* 最新消息 List */
 const newsList = ref([
   {
     image: newsImg1,
@@ -142,6 +175,29 @@ const newsList = ref([
     title: '耶誕快樂，住房送禮',
     description:
       '聖誕節來臨，我們為您準備了特別的禮物！在聖誕期間訂房，不僅有特別優惠，還會送上我們精心準備的聖誕禮物。讓我們一起慶祝這個溫馨的節日吧！',
+  },
+]);
+
+/* Room Swiper Slide List */
+const roomList = ref([
+  {
+    image: roomImg1,
+    title: '尊爵雙人房',
+    description:
+      '享受高級的住宿體驗，尊爵雙人房提供給您舒適寬敞的空間和精緻的裝潢。',
+    price: 10000,
+  },
+  {
+    image: roomImg2,
+    title: '豪華套房',
+    description: '豪華套房是我們酒店的招牌房型，提供給您最尊貴的住宿體驗。',
+    price: 15000,
+  },
+  {
+    image: roomImg3,
+    title: '商務單人房',
+    description: '商務單人房是為商務旅客量身打造的房型，提供您舒適的住宿環境。',
+    price: 8000,
   },
 ]);
 </script>
