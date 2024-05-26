@@ -64,7 +64,7 @@
   </section>
 
   <!-- 關於我們 -->
-  <section class="bg-background py-20 md:py-[120px] relative">
+  <section class="bg-background pt-20 md:py-[120px] relative">
     <div class="w-[100px] md:w-[200px] absolute -top-10 left-6 md:-top-[18%]">
       <img src="@/assets/img/mobile/dot.png" alt="" />
     </div>
@@ -105,9 +105,9 @@
     </div>
   </section>
 
-  <!-- 查看房間 -->
+  <!-- TODO: 查看房間 -->
   <section class="bg-background py-20 md:py-[120px] relative">
-    <div class="container">
+    <div class="container md:ml-0 md:pl-0">
       <swiper-container>
         <template v-for="slide in roomList" :key="slide.image">
           <swiper-slide>
@@ -138,7 +138,42 @@
   </section>
 
   <!-- 佳餚美饌 -->
-  <section></section>
+  <section class="container py-20 md:py-[120px]">
+    <div class="flex items-center mb-10 md:mb-20">
+      <h2 class="text-5xl text-primary-100 me-10">佳餚<br />美饌</h2>
+      <div
+        class="h-[2px] rounded-sm w-40 bg-gradient-to-r from-[#BE9C7C] to-white"
+      ></div>
+    </div>
+
+    <div>
+      <ul class="flex text-center space-x-6">
+        <template v-for="food in foodList" :key="food.title">
+          <li class="w-4/12 h-[600px] relative">
+            <picture>
+              <source media="(min-width: 768px)" :srcset="food.imagePc" />
+              <img
+                :src="food.imageMobile"
+                :alt="food.title"
+                class="h-full w-full object-cover rounded-lg"
+              />
+            </picture>
+
+            <div
+              class="absolute bottom-0 w-full text-white p-6 bg-gradient-to-t from-background to-white"
+            >
+              <div class="flex items-center mb-6 font-bold">
+                <h5 class="me-auto text-xl">{{ food.title }}</h5>
+                <span class="me-4">{{ food.day }}</span>
+                <span>{{ food.time }}</span>
+              </div>
+              <p class="text-start">{{ food.description }}</p>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </section>
 
   <!-- 交通方式 -->
   <section></section>
@@ -155,6 +190,16 @@ import newsImg3 from '@/assets/img/mobile/news3.png';
 import roomImg1 from '@/assets/img/mobile/room1.png';
 import roomImg2 from '@/assets/img/mobile/room2-1.png';
 import roomImg3 from '@/assets/img/mobile/room3-1.png';
+import foodImgPc1 from '@/assets/img/pc/food1.png';
+import foodImgMobile1 from '@/assets/img/mobile/food1.png';
+import foodImgPc2 from '@/assets/img/pc/food2.png';
+import foodImgMobile2 from '@/assets/img/mobile/food2.png';
+import foodImgPc3 from '@/assets/img/pc/food3.png';
+import foodImgMobile3 from '@/assets/img/mobile/food3.png';
+import foodImgPc4 from '@/assets/img/pc/food4.png';
+import foodImgMobile4 from '@/assets/img/mobile/food4.png';
+import foodImgPc5 from '@/assets/img/pc/food5.png';
+import foodImgMobile5 from '@/assets/img/mobile/food5.png';
 
 /* 最新消息 List */
 const newsList = ref([
@@ -198,6 +243,55 @@ const roomList = ref([
     title: '商務單人房',
     description: '商務單人房是為商務旅客量身打造的房型，提供您舒適的住宿環境。',
     price: 8000,
+  },
+]);
+
+/* 佳餚美饌 List */
+const foodList = ref([
+  {
+    imagePc: foodImgPc1,
+    imageMobile: foodImgMobile1,
+    title: '海霸',
+    day: 'SUN-MON',
+    time: '11:00 - 20:30',
+    description:
+      '以新鮮海產料理聞名，我們的專業廚師選用高雄當地的海鮮，每一道菜都充滿海洋的鮮美與清甜。無論是烤魚、蒸蝦還是煮蛤蜊，都能讓您品嚐到最新鮮的海洋風味。',
+  },
+  {
+    imagePc: foodImgPc2,
+    imageMobile: foodImgMobile2,
+    title: '日食',
+    day: 'SUN-MON',
+    time: '17:00 - 22:00',
+    description:
+      '為您提供優質的牛排，每一塊肉都來自頂級的牛肉，經過專業廚師的巧手烹調，口感豐滿、風味絕佳。搭配我們的特製醬料，讓您的味蕾享受一場美味的盛宴。',
+  },
+  {
+    imagePc: foodImgPc3,
+    imageMobile: foodImgMobile3,
+    title: '山臻',
+    day: 'SUN-MON',
+    time: '11:30 - 20:30',
+    description:
+      '帶您進入一次辣味與鮮香兼具的川菜美食之旅。我們的廚師掌握正宗的川菜烹調技巧，從麻辣鍋到口水雞，每一道菜都有其獨特的風味，讓您回味無窮。',
+  },
+  {
+    imagePc: foodImgPc4,
+    imageMobile: foodImgMobile4,
+    title: '月永',
+    day: 'SUN-MON',
+    time: '11:00 - 20:00',
+    description:
+      '從鮮美的海鮮、經典的牛排，到各國的特色美食，我們都一應俱全。在這裡，您可以品嚐到世界各地的美食，每一道菜都由專業廚師用心製作，讓您在享受美食的同時，也能感受到我們的熱情與用心。',
+  },
+  {
+    imagePc: foodImgPc5,
+    imageMobile: foodImgMobile5,
+    title: '天潮',
+    day: 'SUN-MON',
+    time: '14:00 - 19:30',
+    description:
+      '我們提供各種精緻甜點與糕點，無論您喜歡的是巧克力蛋糕、法式馬卡龍，還是台灣傳統的糕點，都能在這裡找到。讓我們的甜點帶您進入一場繽紛的甜蜜旅程。',
   },
 ]);
 </script>
