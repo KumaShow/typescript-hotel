@@ -54,6 +54,7 @@ export default {
           10: '#F9F9F9',
         },
       },
+      backgroundColor: ['group-hover'],
     },
   },
   plugins: [],
