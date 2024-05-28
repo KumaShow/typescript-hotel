@@ -1,10 +1,10 @@
 <template>
   <div class="bg-background">
     <main
-      class="h-[calc(100vh-88px)] lg:flex md:h-[calc(100vh-120px)] overflow-y-auto"
+      class="h-[calc(100vh-88px)] mt-[120px] lg:flex md:h-[calc(100vh-120px)] overflow-y-auto"
     >
       <div
-        class="fixed top-[120px] left-0 h-full w-1/2 bg-cover bg-bottom bg-none lg:bg-[url('@/assets/img/pc/register.png')]"
+        class="fixed top-[120px] left-0 h-full w-1/2 bg-cover bg-bottom hidden lg:block lg:bg-[url('@/assets/img/pc/register.png')]"
       ></div>
 
       <div
@@ -65,6 +65,7 @@
                   name="email"
                   placeholder="hello@exsample.com"
                   class="w-full p-4 text-sm lg:text-base border border-gray-300 rounded-md"
+                  v-model="userInfo.email"
                 />
               </div>
 
@@ -80,6 +81,7 @@
                   name="password"
                   placeholder="請輸入密碼"
                   class="w-full p-4 text-sm lg:text-base border border-gray-300 rounded-lg"
+                  v-model="userInfo.password"
                 />
               </div>
 
@@ -95,6 +97,7 @@
                   name="checkPassword"
                   placeholder="請再輸入一次密碼"
                   class="w-full p-4 text-sm border border-gray-300 rounded-lg"
+                  v-model="userInfo.checkPassword"
                 />
               </div>
             </div>
@@ -113,8 +116,10 @@
                   name="name"
                   placeholder="請輸入姓名"
                   class="w-full p-4 text-sm border border-gray-300 rounded-md"
+                  v-model="userInfo.name"
                 />
               </div>
+
               <div class="mb-4">
                 <label
                   for="phone"
@@ -127,22 +132,57 @@
                   name="phone"
                   placeholder="請輸入手機號碼"
                   class="w-full p-4 text-sm border border-gray-300 rounded-md"
+                  v-model="userInfo.phone"
                 />
               </div>
-              <!-- TODO: 使用日曆套件 -->
+
               <div class="mb-4">
                 <label
                   for="birthday"
                   class="text-white text-sm lg:text-base font-bold block mb-2"
                   >生日</label
                 >
-                <input
-                  type="date"
-                  id="birthday"
-                  name="birthday"
-                  placeholder="請輸入生日"
-                  class="w-full p-4 text-sm border border-gray-300 rounded-md"
-                />
+                <div class="grid grid-cols-3 gap-2">
+                  <select
+                    name="selectYear"
+                    id="selectYear"
+                    class="p-4 text-sm border border-gray-300 rounded-md me-2"
+                    v-model="userBirthday.year"
+                  >
+                    <option value="" selected disabled>年</option>
+                    <option
+                      v-for="year in yearOptions"
+                      :value="year"
+                      :key="year"
+                    >
+                      {{ year }}
+                    </option>
+                  </select>
+
+                  <select
+                    name="selectMonth"
+                    id="selectMonth"
+                    class="p-4 text-sm border border-gray-300 rounded-md me-2"
+                    v-model="userBirthday.month"
+                  >
+                    <option value="" selected disabled>月</option>
+                    <option v-for="month in 12" :value="month" :key="month">
+                      {{ month }}
+                    </option>
+                  </select>
+
+                  <select
+                    name="selectDay"
+                    id="selectDay"
+                    class="p-4 text-sm border border-gray-300 rounded-md"
+                    v-model="userBirthday.day"
+                  >
+                    <option value="" selected disabled>日</option>
+                    <option v-for="day in 31" :value="day" :key="day">
+                      {{ day }}
+                    </option>
+                  </select>
+                </div>
               </div>
 
               <div class="mb-4">
@@ -156,37 +196,34 @@
                     name="city"
                     id="city"
                     class="w-full p-4 text-sm border border-gray-300 rounded-md me-2"
+                    v-model="userInfo.address.city"
                   >
-                    <option value="台北市">台北市</option>
-                    <option value="新北市">新北市</option>
-                    <option value="桃園市">桃園市</option>
-                    <option value="台中市">台中市</option>
-                    <option value="台南市">台南市</option>
-                    <option value="高雄市">高雄市</option>
+                    <option value="" selected disabled>請選擇縣市</option>
+                    <option v-for="city in cities" :key="city" :value="city">
+                      {{ city }}
+                    </option>
                   </select>
                   <select
                     name="area"
                     id="area"
                     class="w-full p-4 text-sm border border-gray-300 rounded-md"
+                    v-model="userInfo.address.country"
                   >
-                    <option value="中正區">中正區</option>
-                    <option value="大同區">大同區</option>
-                    <option value="中山區">中山區</option>
-                    <option value="松山區">松山區</option>
-                    <option value="大安區">大安區</option>
-                    <option value="萬華區">萬華區</option>
-                    <option value="信義區">信義區</option>
-                    <option value="士林區">士林區</option>
-                    <option value="北投區">北投區</option>
-                    <option value="內湖區">內湖區</option>
-                    <option value="南港區">南港區</option>
-                    <option value="文山區">文山區</option>
+                    <option value="" selected disabled>請選擇鄉鎮區</option>
+                    <option
+                      v-for="country in countryOptions"
+                      :value="country"
+                      :key="country"
+                    >
+                      {{ country }}
+                    </option>
                   </select>
                 </div>
                 <input
                   type="text"
                   placeholder="請輸入詳細地址"
                   class="w-full p-4 text-sm lg:text-base border border-gray-300 rounded-md"
+                  v-model="userInfo.address.detail"
                 />
               </div>
 
@@ -229,12 +266,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, reactive, computed, onMounted, watchEffect, inject } from 'vue';
+import { ZipCodeMap } from '@/utilities/TwZipcode';
+import App from '@/App.vue';
 
+const axios: any = inject('axios');
 const step = ref(1);
 
-/* 按鈕事件 */
-const handleClick = () => {
+/**
+ * 按鈕事件
+ * @returns void
+ */
+const handleClick = (): void => {
   if (step.value === 1) {
     step.value = 2;
   } else {
@@ -242,12 +285,40 @@ const handleClick = () => {
   }
 };
 
-/* 完成註冊 */
-const register = () => {
-  console.log('註冊完成');
-};
+/* 使用者資訊 */
+interface UserInfo {
+  name: string;
+  email: string;
+  password: string;
+  checkPassword: string;
+  phone: string;
+  birthday: string;
+  address: {
+    zipcode: number | undefined;
+    detail: string;
+    city: string;
+    country: string;
+  };
+}
+const userInfo: UserInfo = reactive({
+  name: '',
+  email: '',
+  password: '',
+  checkPassword: '',
+  phone: '',
+  birthday: '',
+  address: {
+    zipcode: undefined,
+    detail: '',
+    city: '',
+    country: '',
+  },
+});
 
-/* Step2 狀態樣式 */
+/**
+ * Step2 狀態樣式
+ * @returns object
+ */
 const step2Class = computed(() => {
   return {
     'text-neutral-60': step.value === 1,
@@ -258,6 +329,10 @@ const step2Class = computed(() => {
   };
 });
 
+/**
+ * 按鈕樣式
+ * @returns object
+ */
 const buttonClass = computed(() => {
   return {
     'bg-neutral-40': step.value === 1,
@@ -266,6 +341,77 @@ const buttonClass = computed(() => {
     'text-white': step.value === 2,
   };
 });
-</script>
 
-<style scoped></style>
+/**
+ * 生日年份選項
+ * @returns number[]
+ */
+const generateYearOptions = (): number[] => {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+
+  for (let i = currentYear; i >= currentYear - 100; i--) {
+    years.push(i);
+  }
+
+  return years;
+};
+const yearOptions = ref(generateYearOptions());
+
+interface Birthday {
+  year: string;
+  month: string;
+  day: string;
+}
+const userBirthday: Birthday = reactive({
+  year: '',
+  month: '',
+  day: '',
+});
+
+/**
+ * 縣市列表選項，取自 ZipCodeMap，並只包含獨立的城市名稱。
+ * @returns string[]
+ */
+const cities = [
+  ...new Set(ZipCodeMap.map((item: { city: string }) => item.city)),
+];
+
+/**
+ * 鄉鎮市列表選項，取自 ZipCodeMap，並只包含指定城市的鄉鎮市名稱。
+ * @returns string[]
+ */
+const countries = (city: string): string[] => {
+  return ZipCodeMap.filter((item) => item.city === city).map(
+    (item) => item.county
+  );
+};
+const countryOptions = ref<string[]>();
+
+/**
+ * 監聽縣市變動，更新鄉鎮市選項
+ */
+watchEffect(() => {
+  countryOptions.value = countries(userInfo.address.city);
+});
+
+/**
+ * 完成註冊
+ * @returns void
+ */
+const register = async (): Promise<void> => {
+  try {
+    const res = await axios.post('user/signup', {
+      ...userInfo,
+      birthday: `${userBirthday.year}/${userBirthday.month}/${userBirthday.day}`,
+    });
+    console.log(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+onMounted(() => {
+  generateYearOptions();
+});
+</script>
