@@ -87,7 +87,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, inject } from 'vue';
+import * as alert from '@/utilities/sweetAlert2';
+// import Swal from 'sweetalert2';
+
+const axios: any = inject('axios');
+const Swal: any = inject('$swal');
+
 interface LoginForm {
   email: string;
   password: string;
@@ -99,12 +105,17 @@ const formField = reactive<LoginForm>({
 });
 
 const login = async () => {
-  try {
-    const response = await axios.post('user/login', formField);
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-  }
+  alert.deleteAlert({ title: '是否刪除?', handleConfirm: deleteData });
+  // try {
+  //   const response = await axios.post('user/login', formField);
+  //   console.log(response);
+  // } catch (error) {
+  //   console.error(error);
+  // }
+};
+
+const deleteData = (): void => {
+  console.log('刪除成功');
 };
 </script>
 
