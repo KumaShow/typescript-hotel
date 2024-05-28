@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-background">
+  <!-- FIXME: 登入、註冊頁需要背景黑的 -->
+  <div class="bg-background fixed top-0 w-full z-50">
     <header class="container text-white">
       <div class="flex items-center justify-between py-6">
         <router-link to="/" class="">
