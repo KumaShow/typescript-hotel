@@ -138,40 +138,65 @@
   </section>
 
   <!-- 佳餚美饌 -->
-  <section class="container py-20 md:py-[120px]">
-    <div class="flex items-center mb-10 md:mb-20">
-      <h2 class="text-5xl text-primary-100 me-10">佳餚<br />美饌</h2>
-      <div
-        class="h-[2px] rounded-sm w-40 bg-gradient-to-r from-[#BE9C7C] to-white"
-      ></div>
-    </div>
+  <section class="py-20 md:py-[120px] relative">
+    <img
+      src="@/assets/img/pc/line.png"
+      alt=""
+      class="absolute top-14 left-0 xl:w-40 h-[103%] hidden xl:block"
+    />
+    <div class="container">
+      <div class="flex items-center mb-10 md:mb-20">
+        <h2 class="text-5xl text-primary-100 me-10">佳餚<br />美饌</h2>
+        <div
+          class="h-[2px] rounded-sm w-40 bg-gradient-to-r from-[#BE9C7C] to-white"
+        ></div>
+      </div>
 
-    <div>
-      <ul class="flex text-center space-x-6">
-        <template v-for="food in foodList" :key="food.title">
-          <li class="w-4/12 h-[600px] relative">
-            <picture>
-              <source media="(min-width: 768px)" :srcset="food.imagePc" />
-              <img
-                :src="food.imageMobile"
-                :alt="food.title"
-                class="h-full w-full object-cover rounded-lg"
-              />
-            </picture>
+      <div>
+        <swiper-container
+          :slides-per-view="3.5"
+          :space-between="24"
+          :loop="true"
+          :autoplay="{
+            delay: 5000,
+            disableOnInteraction: true,
+          }"
+          :breakpoints="{
+            320: {
+              slidesPerView: 1.5,
+            },
+            768: {
+              slidesPerView: 3.5,
+            },
+          }"
+        >
+          <template v-for="food in foodList" :key="food.title">
+            <swiper-slide class="w-4/12 h-[600px] relative">
+              <picture>
+                <source media="(min-width: 768px)" :srcset="food.imagePc" />
+                <img
+                  :src="food.imageMobile"
+                  :alt="food.title"
+                  class="h-full w-full object-cover rounded-lg"
+                />
+              </picture>
 
-            <div
-              class="absolute bottom-0 w-full text-white p-6 bg-gradient-to-t from-background to-white"
-            >
-              <div class="flex items-center mb-6 font-bold">
-                <h5 class="me-auto text-xl">{{ food.title }}</h5>
-                <span class="me-4">{{ food.day }}</span>
-                <span>{{ food.time }}</span>
+              <div
+                class="absolute bottom-0 w-full text-white p-6 bg-gradient-to-t from-background to-white"
+              >
+                <div class="flex items-center mb-6 font-bold">
+                  <h5 class="me-auto text-xl">{{ food.title }}</h5>
+                  <span class="me-4">{{ food.day }}</span>
+                  <span>{{ food.time }}</span>
+                </div>
+                <p class="text-start">
+                  {{ food.description }}
+                </p>
               </div>
-              <p class="text-start">{{ food.description }}</p>
-            </div>
-          </li>
-        </template>
-      </ul>
+            </swiper-slide>
+          </template>
+        </swiper-container>
+      </div>
     </div>
   </section>
 
@@ -179,7 +204,39 @@
   <section></section>
 
   <!-- Footer -->
-  <footer></footer>
+  <footer class="bg-background py-20 md:pt-20 md:pb-[120px] text-white">
+    <div class="container md:flex justify-between">
+      <div class="mb-10 md:mb-0">
+        <img
+          src="@/assets/img/pc/logo.png"
+          alt="享樂酒店 Logo"
+          class="w-48 mb-10"
+        />
+        <ul class="flex gap-x-4">
+          <li class="border rounded-full">
+            <a href="" class="p-2 block" @click.prevent>
+              <app-icon icon="jam:line" width="24" height="24" />
+            </a>
+          </li>
+          <li class="border rounded-full">
+            <a href="" class="p-2 block" @click.prevent>
+              <app-icon icon="mingcute:ins-line" width="24" height="24" />
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="flex">
+        <template v-for="(item, index) in contact" :key="item.title">
+          <!-- TODO: col 未設定 -->
+          <li :class="getItemClass(index)" class="">
+            <p class="font-bold">{{ item.title }}</p>
+            <p>{{ item.text }}</p>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
@@ -294,4 +351,36 @@ const foodList = ref([
       '我們提供各種精緻甜點與糕點，無論您喜歡的是巧克力蛋糕、法式馬卡龍，還是台灣傳統的糕點，都能在這裡找到。讓我們的甜點帶您進入一場繽紛的甜蜜旅程。',
   },
 ]);
+
+/* Footer 聯絡資訊 */
+const contact = ref([
+  {
+    title: 'TEL',
+    text: '+886-7-1234567',
+  },
+  {
+    title: 'FAX',
+    text: '+886-7-1234567',
+  },
+  {
+    title: 'MAIL',
+    text: 'enjoy@hotel.com',
+  },
+  {
+    title: 'WEB',
+    text: 'https://kumashow.github.io/typescript-hotel/',
+  },
+]);
+
+/**
+ * 設定聯絡資訊 Class 樣式，最後一項沒有 Margin Bottom
+ * @param {number} index 陣列 index
+ * @returns {Object} 回傳物件，依條件回傳樣式
+ */
+const getItemClass = (index: number) => {
+  return {
+    'mb-4': index !== contact.value.length - 1,
+    'last:mb-0': index === contact.value.length - 1,
+  };
+};
 </script>
