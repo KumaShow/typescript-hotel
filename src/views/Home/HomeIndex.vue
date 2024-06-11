@@ -35,32 +35,36 @@
 
   <!-- 最新消息 -->
   <section class="container my-20 md:my-[120px] md:flex">
-    <div>
-      <h2 class="text-5xl text-primary-100 mb-10 md:columns-2">
-        最新<br />消息
-      </h2>
-      <span
-        class="h-[1px] w-[20%] bg-black group-hover:bg-white inline-block align-middle absolute right-0 top-1/2 transform translate-y-[-50%] translate-x-[-50%]"
-      ></span>
-    </div>
+    <div class="lg:grid lg:grid-cols-12 gap-6">
+      <div class="col-span-2 mb-10 lg:mb-0">
+        <h2 class="text-5xl text-primary-100 mb-6 md:mb-10">最新<br />消息</h2>
+        <div
+          class="h-[2px] rounded-sm w-40 bg-gradient-to-r from-[#BE9C7C] to-white"
+        ></div>
+      </div>
 
-    <ul>
-      <li class="md:flex mb-10" v-for="(news, idx) in newsList" :key="idx">
-        <div class="mb-6 md:w-5/12">
-          <img
-            class="object-cover rounded-lg md:h-[300px] md:w-[474px] mx-auto"
-            :src="news.image"
-            :alt="news.title"
-          />
-        </div>
-        <div class="md:w-7/12 flex flex-col justify-center">
-          <h3 class="text-2xl mb-2 md:mb-6">{{ news.title }}</h3>
-          <p class="text-neutral-80">
-            {{ news.description }}
-          </p>
-        </div>
-      </li>
-    </ul>
+      <ul class="col-span-10">
+        <li
+          class="md:flex gap-6 mb-10"
+          v-for="(news, idx) in newsList"
+          :key="idx"
+        >
+          <div class="mb-6 md:w-5/12">
+            <img
+              class="object-cover rounded-lg md:h-[300px] md:w-[474px] mx-auto"
+              :src="news.image"
+              :alt="news.title"
+            />
+          </div>
+          <div class="md:w-7/12 flex flex-col justify-center">
+            <h3 class="text-2xl mb-2 md:mb-6">{{ news.title }}</h3>
+            <p class="text-neutral-80">
+              {{ news.description }}
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <!-- 關於我們 -->
@@ -152,89 +156,147 @@
         ></div>
       </div>
 
-      <div>
-        <swiper-container
-          :slides-per-view="3.5"
-          :space-between="24"
-          :loop="true"
-          :autoplay="{
-            delay: 5000,
-            disableOnInteraction: true,
-          }"
-          :breakpoints="{
-            320: {
-              slidesPerView: 1.5,
-            },
-            768: {
-              slidesPerView: 3.5,
-            },
-          }"
-        >
-          <template v-for="food in foodList" :key="food.title">
-            <swiper-slide class="w-4/12 h-[600px] relative">
-              <picture>
-                <source media="(min-width: 768px)" :srcset="food.imagePc" />
-                <img
-                  :src="food.imageMobile"
-                  :alt="food.title"
-                  class="h-full w-full object-cover rounded-lg"
-                />
-              </picture>
+      <swiper-container
+        :slides-per-view="3.5"
+        :space-between="24"
+        :loop="true"
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: true,
+        }"
+        :breakpoints="{
+          320: {
+            slidesPerView: 1.5,
+          },
+          768: {
+            slidesPerView: 2.5,
+          },
+          1024: {
+            slidesPerView: 3.5,
+          },
+        }"
+      >
+        <template v-for="food in foodList" :key="food.title">
+          <swiper-slide
+            class="w-4/12 h-[600px] relative rounded-lg overflow-hidden"
+          >
+            <picture>
+              <source media="(min-width: 768px)" :srcset="food.imagePc" />
+              <img
+                :src="food.imageMobile"
+                :alt="food.title"
+                class="h-full w-full object-cover"
+              />
+            </picture>
 
-              <div
-                class="absolute bottom-0 w-full text-white p-6 bg-gradient-to-t from-background to-white"
-              >
-                <div class="flex items-center mb-6 font-bold">
-                  <h5 class="me-auto text-xl">{{ food.title }}</h5>
-                  <span class="me-4">{{ food.day }}</span>
-                  <span>{{ food.time }}</span>
-                </div>
-                <p class="text-start">
-                  {{ food.description }}
-                </p>
+            <div
+              class="absolute bottom-0 w-full text-white p-6 bg-gradient-to-t from-background to-white"
+            >
+              <div class="flex items-center mb-6 font-bold">
+                <h5 class="me-auto text-xl">{{ food.title }}</h5>
+                <span class="me-4">{{ food.day }}</span>
+                <span>{{ food.time }}</span>
               </div>
-            </swiper-slide>
-          </template>
-        </swiper-container>
-      </div>
+              <p class="text-start">
+                {{ food.description }}
+              </p>
+            </div>
+          </swiper-slide>
+        </template>
+      </swiper-container>
     </div>
   </section>
 
   <!-- 交通方式 -->
-  <section></section>
+  <section class="py-20 md:py-[120px] bg-background text-white">
+    <div class="container">
+      <div class="">
+        <div class="flex items-center mb-10 md:mb-20">
+          <h2 class="text-5xl text-primary-100 me-10">交通<br />方式</h2>
+          <div
+            class="h-[2px] rounded-sm w-40 bg-gradient-to-r from-[#BE9C7C] to-white"
+          ></div>
+        </div>
+
+        <p class="font-bold mb-4">{{ contact.address }}</p>
+
+        <picture class="w-full">
+          <source media="(min-width: 768px)" srcset="@/assets/img/pc/map.png" />
+          <img
+            src="@/assets/img/mobile/map.png"
+            alt="地圖"
+            class="h-full w-full object-cover"
+          />
+        </picture>
+
+        <ul class="mt-6 flex flex-col md:flex-row gap-6">
+          <template v-for="item in traffic.infos" :key="item">
+            <li>
+              <app-icon
+                :icon="item.icon"
+                class="text-[#BE9C7C] mb-2 w-12 h-12 md:w-20 md:h-20"
+              />
+              <h3 class="mb-2 font-bold md:mb-4">{{ item.title }}</h3>
+              <p>{{ item.description }}</p>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 裝飾圖 -->
+  <div class="bg-background">
+    <picture>
+      <source
+        media="(min-width: 768px)"
+        srcset="@/assets/img/pc/line2.png"
+        sizes="裝飾線"
+      />
+      <img src="@/assets/img/mobile/line.png" alt="裝飾線" />
+    </picture>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-background py-20 md:pt-20 md:pb-[120px] text-white">
-    <div class="container md:flex justify-between">
-      <div class="mb-10 md:mb-0">
-        <img
-          src="@/assets/img/pc/logo.png"
-          alt="享樂酒店 Logo"
-          class="w-48 mb-10"
-        />
-        <ul class="flex gap-x-4">
-          <li class="border rounded-full">
-            <a href="" class="p-2 block" @click.prevent>
-              <app-icon icon="jam:line" width="24" height="24" />
-            </a>
-          </li>
-          <li class="border rounded-full">
-            <a href="" class="p-2 block" @click.prevent>
-              <app-icon icon="mingcute:ins-line" width="24" height="24" />
-            </a>
-          </li>
+    <div class="container">
+      <div class="md:flex justify-between">
+        <div class="mb-10 md:mb-0">
+          <img
+            src="@/assets/img/pc/logo.png"
+            alt="享樂酒店 Logo"
+            class="w-48 mb-10"
+          />
+          <ul class="flex gap-x-4">
+            <li class="border rounded-full">
+              <a href="" class="p-2 block" @click.prevent>
+                <app-icon icon="jam:line" width="24" height="24" />
+              </a>
+            </li>
+            <li class="border rounded-full">
+              <a href="" class="p-2 block" @click.prevent>
+                <app-icon icon="mingcute:ins-line" width="24" height="24" />
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <ul
+          class="md:flex md:flex-col md:flex-wrap md:gap-x-20 md:gap-y-10 md:max-h-[200px] w-96 overflow-hidden"
+        >
+          <template v-for="(item, index) in contact.infos" :key="item.title">
+            <li :class="getItemClass(index)" class="">
+              <p class="font-bold">{{ item.title }}</p>
+              <a :href="item.href">{{ item.text }}</a>
+            </li>
+          </template>
         </ul>
       </div>
 
-      <ul class="flex">
-        <template v-for="(item, index) in contact" :key="item.title">
-          <!-- TODO: col 未設定 -->
-          <li :class="getItemClass(index)" class="">
-            <p class="font-bold">{{ item.title }}</p>
-            <p>{{ item.text }}</p>
-          </li>
-        </template>
-      </ul>
+      <div class="mt-20 md:flex md:justify-between">
+        <p>{{ contact.address }}</p>
+        <p class="mt-4 md:mt-0">{{ contact.copyRight }}</p>
+      </div>
     </div>
   </footer>
 </template>
@@ -352,35 +414,67 @@ const foodList = ref([
   },
 ]);
 
+/* 交通方式 */
+const traffic = ref({
+  address: '台灣高雄市 No.1 號',
+  map: '@/assets/img/mobile/map.png',
+  infos: [
+    {
+      icon: 'mdi:car',
+      title: '自行開車',
+      description:
+        '如果您選擇自行開車，可以透過國道一號下高雄交流道，往市區方向行駛，並依路標指示即可抵達「享樂酒店」。飯店內設有停車場，讓您停車方便。',
+    },
+    {
+      icon: 'mdi:train',
+      title: '高鐵/火車',
+      description:
+        '如果您是搭乘高鐵或火車，可於左營站下車，外頭有計程車站，搭乘計程車約20分鐘即可抵達。或者您也可以轉乘捷運紅線至中央公園站下車，步行約10分鐘便可抵達。',
+    },
+    {
+      icon: 'mdi:car-side',
+      title: '禮賓車服務',
+      description:
+        '承億酒店提供禮賓專車接送服務，但因目的地遠近會有不同的收費，請撥打電話將由專人為您服務洽詢專線：(07)123-4567',
+    },
+  ],
+});
+
 /* Footer 聯絡資訊 */
-const contact = ref([
-  {
-    title: 'TEL',
-    text: '+886-7-1234567',
-  },
-  {
-    title: 'FAX',
-    text: '+886-7-1234567',
-  },
-  {
-    title: 'MAIL',
-    text: 'enjoy@hotel.com',
-  },
-  {
-    title: 'WEB',
-    text: 'https://kumashow.github.io/typescript-hotel/',
-  },
-]);
+const contact = ref({
+  address: '77777 台灣桃園市中壢區 No.1 號',
+  copyRight: '© 享樂酒店 2023 All Rights Reserved.',
+  infos: [
+    {
+      title: 'TEL',
+      href: 'tel:+886-7-1234567',
+      text: '+886-7-1234567',
+    },
+    {
+      title: 'FAX',
+      href: 'tel:+886-7-1234567',
+      text: '+886-7-1234567',
+    },
+    {
+      title: 'MAIL',
+      href: 'mailto: enjoy@hotel.com',
+      text: 'enjoy@hotel.com',
+    },
+    {
+      title: 'WEB',
+      href: 'https://github.com/KumaShow/typescript-hotel',
+      text: 'GitHub Repo',
+    },
+  ],
+});
 
 /**
  * 設定聯絡資訊 Class 樣式，最後一項沒有 Margin Bottom
- * @param {number} index 陣列 index
- * @returns {Object} 回傳物件，依條件回傳樣式
  */
 const getItemClass = (index: number) => {
   return {
-    'mb-4': index !== contact.value.length - 1,
-    'last:mb-0': index === contact.value.length - 1,
+    'mb-4': index !== contact.value.infos.length - 1,
+    'last:mb-0': index === contact.value.infos.length - 1,
   };
 };
 </script>
