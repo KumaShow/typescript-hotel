@@ -105,7 +105,7 @@ const formField = reactive<LoginForm>({
 });
 
 const login = async () => {
-  alert.deleteAlert({ title: '是否刪除?', handleConfirm: deleteData });
+  // alert.deleteAlert({ title: '是否刪除?', handleConfirm: deleteData });
   // try {
   //   const response = await axios.post('user/login', formField);
   //   console.log(response);
